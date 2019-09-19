@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+  emqx:
+    build: emqx
+    ports:
+      - '1883:1883'
+      - '8083:8083'
+      - '18083:18083'
+    links:
+      - emqx-auth
+    restart: unless-stopped
+
+  emqx-auth:
+    build: emqx-auth
+    environment:
+      AUTH: kipe:salasana:location/{user},battery/{user}|example:password:test/#
+    restart: unless-stopped
